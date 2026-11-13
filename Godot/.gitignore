@@ -1,0 +1,5 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+# 번역 CSV 에서 임포트 때 생성되는 파일
+*.translation

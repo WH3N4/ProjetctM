@@ -1,0 +1,8 @@
+#!/bin/sh
+# </dev/null: gate.sh 가 Godot 를 부를 때 git 이 넘긴 ref 목록을 먹지 않게
+z=0000000000000000000000000000000000000000
+while read -r _ lsha _ rsha; do
+  [ "$lsha" = $z ] && continue                                               # 브랜치 삭제 push
+  [ "$rsha" = $z ] && rsha=$(git rev-list --max-parents=0 "$lsha" | tail -n1)  # 새 브랜치
+  sh tools/gate.sh push "$rsha" "$lsha" </dev/null || exit 1
+done

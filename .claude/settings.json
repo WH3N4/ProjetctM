@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": ["Bash(git status:*)", "Bash(git diff:*)", "Bash(git log:*)", "Bash(git show:*)",
+              "Bash(git add:*)", "Bash(git commit:*)", "Bash(sh tools/gate.sh:*)"],
+    "ask":   ["Bash(git push:*)", "Bash(git switch:*)", "Bash(git checkout:*)", "Bash(git rebase:*)",
+              "Bash(git merge:*)", "Edit(**/*.tscn)", "Edit(**/*.tres)", "Edit(**/project.godot)"],
+    "deny":  ["Edit(**/.godot/**)", "Edit(**/*.import)", "Edit(**/*.uid)",
+              "Read(**/*.keystore)", "Read(**/.env*)"]
+  },
+  "hooks": {
+    "PreToolUse": [{ "matcher": "Bash|PowerShell", "hooks": [{ "type": "command", "shell": "bash",
+      "command": "sh \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard-bash.sh\"" }] }],
+    "Stop": [{ "hooks": [{ "type": "command", "shell": "bash", "timeout": 120,
+      "command": "sh \"$CLAUDE_PROJECT_DIR/.claude/hooks/stop-gate.sh\"" }] }]
+  }
+}

@@ -1,0 +1,5 @@
+# 내보내기(export) 결과물
+/build/
+
+# Claude Code 개인 설정(기기별)
+/.claude/settings.local.json

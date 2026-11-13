@@ -1,0 +1,2 @@
+# 줄바꿈은 LF 로 통일 — Godot 기본값이고, sh 스크립트·git 훅은 CRLF 면 깨진다
+* text=auto eol=lf
