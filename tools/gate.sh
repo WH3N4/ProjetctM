@@ -18,7 +18,8 @@ gd_ok() {  # $1 = 리포 기준 경로(Godot/…) → res:// 경로로 바꿔 �
     ! printf '%s' "$out" | grep -q 'SCRIPT ERROR\|Parse Error'
 }
 parse_gd() {  # $1 = 경로 목록(줄바꿈 구분) — 파이프 금지(서브셸이면 fail 이 사라진다)
-  gd=$(printf '%s\n' "$1" | grep "^$PROJ/.*\.gd\$" || true); [ -z "$gd" ] && return
+  # addons/ 는 서드파티 — 파일 하나씩 따로 파싱하면 서로 의존하는 코드(GUT 등)에서 거짓 오류가 난다
+  gd=$(printf '%s\n' "$1" | grep "^$PROJ/.*\.gd\$" | grep -v "^$PROJ/addons/" || true); [ -z "$gd" ] && return
   command -v "$GODOT" >/dev/null 2>&1 || { err "Godot 를 못 찾음 — 환경변수 GODOT 설정 후 Fork·VSCode 재시작"; return; }
   bad=$(printf '%s\n' "$gd" | while IFS= read -r f; do
     [ -f "$f" ] || continue
